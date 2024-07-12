@@ -326,55 +326,60 @@ where
 //     stripe_count: 10,
 // };
 
-fn get_test_mask() -> MaskConfig {
-    MaskConfig {
-        alpha: 32,
-        content: MaskContent::Text {
-            text: "ЧУПЛЫГИН УХОДИ".to_string(),
-            font: "Comic Sans MS".to_string(),
-            color: Color {
-                rgb: [0xff, 0xff, 0xff],
+#[cfg(test)]
+mod tests {
+    use super::{apply_mask, generate_mask, generate_mask_svg, Color, MaskConfig, MaskContent};
+
+    fn get_test_mask() -> MaskConfig {
+        MaskConfig {
+            alpha: 32,
+            content: MaskContent::Text {
+                text: "ЧУПЛЫГИН УХОДИ".to_string(),
+                font: "Comic Sans MS".to_string(),
+                color: Color {
+                    rgb: [0xff, 0xff, 0xff],
+                },
+                size_percent: 5.0,
+                rotation: 45.0,
+                row_slide_percent: 1.0,
+                offset_x_percent: -30.0,
+                stride_x_percent: 30.0,
+                offset_y_percent: -20.0,
+                stride_y_percent: 20.0,
             },
-            size_percent: 5.0,
-            rotation: 45.0,
-            row_slide_percent: 1.0,
-            offset_x_percent: -30.0,
-            stride_x_percent: 30.0,
-            offset_y_percent: -20.0,
-            stride_y_percent: 20.0,
-        },
+        }
     }
-}
 
-#[test]
-fn svg_smoke() {
-    let svg = generate_mask_svg(get_test_mask(), 100, 100);
+    #[test]
+    fn svg_smoke() {
+        let svg = generate_mask_svg(get_test_mask(), 100, 100);
 
-    eprintln!("{}", svg);
-}
+        eprintln!("{}", svg);
+    }
 
-#[test]
-fn generate_mask_smoke() {
-    let mask = generate_mask(get_test_mask(), 720, 1920);
+    #[test]
+    fn generate_mask_smoke() {
+        let mask = generate_mask(get_test_mask(), 720, 1920);
 
-    mask.save("example_results/mask_premultiplied_720x1920.png")
-        .unwrap();
-}
-
-#[test]
-fn apply_mask_smoke() {
-    for example_image in std::fs::read_dir("example_images").unwrap() {
-        let example_image_entry = example_image.unwrap();
-        println!("Applying to {}", example_image_entry.path().display());
-        let mut example_image = image::open(example_image_entry.path()).unwrap().to_rgb8();
-
-        apply_mask(get_test_mask(), &mut example_image);
-
-        example_image
-            .save(format!(
-                "example_results/{}",
-                example_image_entry.file_name().into_string().unwrap()
-            ))
+        mask.save("example_results/mask_premultiplied_720x1920.png")
             .unwrap();
+    }
+
+    #[test]
+    fn apply_mask_smoke() {
+        for example_image in std::fs::read_dir("example_images").unwrap() {
+            let example_image_entry = example_image.unwrap();
+            println!("Applying to {}", example_image_entry.path().display());
+            let mut example_image = image::open(example_image_entry.path()).unwrap().to_rgb8();
+
+            apply_mask(get_test_mask(), &mut example_image);
+
+            example_image
+                .save(format!(
+                    "example_results/{}",
+                    example_image_entry.file_name().into_string().unwrap()
+                ))
+                .unwrap();
+        }
     }
 }

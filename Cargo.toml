@@ -13,7 +13,7 @@ grammers-tl-types = { git = "https://github.com/Lonami/grammers.git", rev = "ff7
 config = "0.14.0"
 serde = "1.0.204"
 hex-serde = "0.1.0"
-    
+
 opentelemetry = "0.23.0"
 opentelemetry-otlp = "0.16.0"
 opentelemetry_sdk = { version = "0.23.0", features = ["rt-tokio"] }
@@ -27,11 +27,12 @@ xml-builder = "0.5.2"
 tiny-skia = { version = "0.11.4", default-features = false }
 usvg = "0.42.0"
 resvg = "0.42.0"
-image = { version = "0.25.1", default-features = false }
+image = { version = "0.25.1", default-features = false, features = ["jpeg"] }
 num-traits = "0.2.19"
 
 anyhow = "1.0.86"
 indoc = "2.0.5"
+displaydoc = "0.2.5"
 
 [dev-dependencies]
 image = { version = "0.25.1", default-features = false, features = ["png", "jpeg"] }

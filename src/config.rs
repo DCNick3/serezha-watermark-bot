@@ -4,8 +4,7 @@ use serde::Deserialize;
 #[derive(Deserialize, Clone, Debug)]
 pub struct Config {
     pub telegram: Telegram,
-    // pub data_storages: Data,
-    // pub access: Access,
+    pub masks: Mask,
 }
 
 impl Config {
@@ -64,4 +63,15 @@ pub enum TelegramAccount {
     User {
         phone: String,
     },
+}
+
+#[derive(Deserialize, Clone, Debug)]
+pub struct Mask {
+    pub presets: Vec<NamedPreset>,
+}
+
+#[derive(Deserialize, Clone, Debug)]
+pub struct NamedPreset {
+    pub name: String,
+    pub preset: crate::mask_generator::MaskConfig,
 }

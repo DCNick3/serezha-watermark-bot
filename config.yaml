@@ -1,0 +1,32 @@
+masks:
+  presets:
+    - name: "ЧУПЛЫГИН УХОДИ #20"
+      preset:
+        alpha: 32
+        content:
+          type: "Text"
+          text: "ЧУПЛЫГИН УХОДИ"
+          font: "Comic Sans MS"
+          color: "#ffffff"
+          size_percent: 5.0
+          rotation: 45.0
+          row_slide_percent: 1.0
+          offset_x_percent: -30.0
+          stride_x_percent: 30.0
+          offset_y_percent: -20.0
+          stride_y_percent: 20.0
+    - name: "ЧУПЛЫГИН УХОДИ #40"
+      preset:
+        alpha: 64
+        content:
+          type: "Text"
+          text: "ЧУПЛЫГИН УХОДИ"
+          font: "Comic Sans MS"
+          color: "#ffffff"
+          size_percent: 5.0
+          rotation: 45.0
+          row_slide_percent: 1.0
+          offset_x_percent: -30.0
+          stride_x_percent: 30.0
+          offset_y_percent: -20.0
+          stride_y_percent: 20.0

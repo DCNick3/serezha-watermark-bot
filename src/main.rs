@@ -1,6 +1,7 @@
 use anyhow::{Context as _, Result};
 use tracing::{error, info};
 
+mod bot;
 mod config;
 mod grammers_boilerplate;
 mod init_tracing;
@@ -24,12 +25,12 @@ async fn main() -> Result<()> {
         _ = tokio::signal::ctrl_c() => {
             info!("Got SIGINT; quitting early gracefully");
         }
-        // r = bot::run_bot(&client, dispatcher, Duration::from_secs(60), whitelist, config.access.superusers) => {
-        //     match r {
-        //         Ok(_) => info!("Got disconnected from Telegram gracefully"),
-        //         Err(e) => error!("Error during update handling: {}", e),
-        //     }
-        // }
+        r = bot::run_bot(&client, config.masks.clone()) => {
+            match r {
+                Ok(_) => info!("Got disconnected from Telegram gracefully"),
+                Err(e) => error!("Error during update handling: {}", e),
+            }
+        }
         r = grammers_boilerplate::save_session_periodic(&client, &config.telegram) => {
             match r {
                 Ok(_) => unreachable!(),
