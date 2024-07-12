@@ -1,0 +1,11 @@
+telegram:
+  session_storage: "tgbot.session"
+  api_id: "<paste API ID>"
+  api_hash: "<paste API hash>"
+  account:
+    type: "Bot"
+    token: "<paste token>"
+access:
+  superusers:
+    - 123456789
+    - 123456780
