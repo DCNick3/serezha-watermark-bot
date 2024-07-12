@@ -1,0 +1,5 @@
+.idea
+target
+*.session
+Dockerfile
+deployment

@@ -36,3 +36,8 @@ displaydoc = "0.2.5"
 
 [dev-dependencies]
 image = { version = "0.25.1", default-features = false, features = ["png", "jpeg"] }
+
+[profile.ship]
+inherits = "release"
+debug = 0
+lto = 'thin'

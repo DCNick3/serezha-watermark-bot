@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: serezha-watermark-bot
+  labels:
+    app: serezha-watermark-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: serezha-watermark-bot
+  template:
+    metadata:
+      labels:
+        app: serezha-watermark-bot
+      annotations:
+        instrumentation.opentelemetry.io/inject-sdk: "true"
+    spec:
+      volumes:
+        - name: serezha-watermark-bot-data
+          persistentVolumeClaim:
+            claimName: serezha-watermark-bot-pvc
+      containers:
+        - name: serezha-watermark-bot
+          image: ghcr.io/dcnick3/serezha-watermark-bot:ref-46167712342f2a486585ae3005421aa89b5d899c
+          volumeMounts:
+            - mountPath: /data
+              name: serezha-watermark-bot-data
+          env:
+            - name: CONFIG_TELEGRAM__SESSION_STORAGE
+              value: "/data/tgbot.session"
+            - name: CONFIG_TELEGRAM__ACCOUNT__TYPE
+              value: Bot
+            - name: CONFIG_TELEGRAM__ACCOUNT__TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: serezha-watermark-bot-secrets
+                  key: telegram_account_token
+
+            - name: CONFIG_TELEGRAM__API_ID
+              valueFrom:
+                secretKeyRef:
+                  name: serezha-watermark-bot-secrets
+                  key: telegram_api_id
+            - name: CONFIG_TELEGRAM__API_HASH
+              valueFrom:
+                secretKeyRef:
+                  name: serezha-watermark-bot-secrets
+                  key: telegram_api_hash
